@@ -16,6 +16,8 @@ dependencies:
   cupertino_icons: ^1.0.0
   equatable: ^1.2.5
   flutter_bloc: ^6.1.1
+  dio: ^3.0.10
+  google_maps_flutter: ^1.1.1
 
 dev_dependencies:
   flutter_test:
