@@ -15,20 +15,15 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => PlacesListBloc(_placeRepository),
         ),
-      ], child: MaterialApp(
-      theme: ThemeData(),
-      initialRoute: '/',
-      onGenerateRoute: (RouteSettings settings){
-        switch(settings.name){
-          case '/':
-            return MaterialPageRoute(builder: (context) => PlaceScreen());
-          case '/map_list':
-            return MaterialPageRoute(builder: (context) => MapScreen());
-          default: return null;
-        }
-
+      ],
+      child: MaterialApp(
+        theme: ThemeData(),
+        initialRoute: '/',
+        routes:{
+      '/': (context) => PlaceScreen(),
+      '/map_screen': (context) => MapScreen(),
       },
-    ),
+      ),
     );
   }
 }
