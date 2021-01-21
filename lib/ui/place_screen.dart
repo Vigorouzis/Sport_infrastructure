@@ -5,6 +5,7 @@ import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.da
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_state.dart';
 import 'package:sport_infrastructure/models/place.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
+import 'package:sport_infrastructure/ui/widgets/map_screen.dart';
 import 'package:sport_infrastructure/ui/widgets/place_list.dart';
 
 class PlaceScreen extends StatelessWidget {
@@ -28,6 +29,13 @@ class PlaceScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: PlaceList(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.map),
+          onPressed: () {
+
+            Navigator.pushNamed(context, '/map_screen');
+          },
+        ),
       ),
     );
   }
