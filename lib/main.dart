@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sport_infrastructure/ui/app.dart';
 import 'package:sport_infrastructure/ui/place_screen.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PlaceScreen(),
+      home: App(),
     );
   }
 }
