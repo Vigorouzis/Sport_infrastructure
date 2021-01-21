@@ -26,4 +26,19 @@ class Place {
       this.location,
       this.categoriesIDs,
       this.tagsUIDs});
+
+  factory Place.fromJson(Map<String, dynamic> json) {
+    return Place(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      holderOrganization: json['holderOrganization'],
+      basedOrganizations: json['basedOrganizations'],
+      isFreeVisit: json['isFreeVisit'],
+      abonements: json['abonements'],
+      location: json['location'],
+      categoriesIDs: json['categoriesIDs'],
+      tagsUIDs: json['tagsUIDs'],
+    );
+  }
 }
