@@ -4,23 +4,11 @@ import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_bloc.dar
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_state.dart';
 import 'package:sport_infrastructure/models/place.dart';
+import 'package:sport_infrastructure/resources/place_repository.dart';
 import 'package:sport_infrastructure/ui/widgets/place_list.dart';
 
 class PlaceScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) => PlacesListBloc(),
-        child: HomePage(),
-      ),
-    );
-  }
-}
-
-@immutable
-class HomePage extends StatelessWidget {
-
+  final _placeRepository = PlaceRepository();
   var places = [
     Place(
         id: '1',
@@ -34,10 +22,10 @@ class HomePage extends StatelessWidget {
         categoriesIDs: null,
         tagsUIDs: null)
   ];
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PlacesListBloc(),
+    return SafeArea(
       child: Scaffold(
         body: PlaceList(),
       ),
