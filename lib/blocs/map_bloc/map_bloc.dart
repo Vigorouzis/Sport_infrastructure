@@ -1,16 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_infrastructure/blocs/map_bloc/map_event.dart';
 import 'package:sport_infrastructure/blocs/map_bloc/map_state.dart';
+import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
+
 import 'package:sport_infrastructure/models/place.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
 
-class MapBloc extends Bloc<MapEvent, MapState>{
+class MapBloc extends Bloc<MapEvent, MapState> {
   final PlaceRepository placeRepository;
 
   MapBloc(this.placeRepository) : super(InitialMapState());
 
   @override
-  Stream<MapState> mapEventToState(PlacesListEvent event) async* {
+  Stream<MapState> mapEventToState(MapEvent event) async* {
     if (event is GetMapLocations) {
       yield MapLoading();
       try {
@@ -29,9 +31,9 @@ class MapBloc extends Bloc<MapEvent, MapState>{
               tagsUIDs: null)
         ];
         Future.delayed(const Duration(milliseconds: 500));
-        yield PlacesListLoaded(places: places);
+        yield MapLoaded(markers: places);
       } catch (_) {
-        yield PlacesListFailure();
+        yield MapFailure();
       }
     }
   }
