@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sport_infrastructure/models/place.dart';
 
 abstract class MapState extends Equatable {
@@ -14,12 +15,12 @@ class InitialMapState extends MapState {}
 class MapLoading extends MapState {}
 
 class MapLoaded extends MapState {
-  final List<Place> markers;
+  final LatLng location;
 
-  const MapLoaded({this.markers});
+  const MapLoaded({this.location});
 
   @override
-  List<Object> get props => [markers];
+  List<Object> get props => [location];
 }
 
 class MapFailure extends MapState {}

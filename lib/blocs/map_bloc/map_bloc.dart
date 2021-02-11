@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sport_infrastructure/blocs/map_bloc/map_event.dart';
 import 'package:sport_infrastructure/blocs/map_bloc/map_state.dart';
-import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
-
-import 'package:sport_infrastructure/models/place.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
 
 class MapBloc extends Bloc<MapEvent, MapState> {
@@ -16,22 +15,14 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     if (event is GetMapLocations) {
       yield MapLoading();
       try {
-        //TODO: Get data from server
-        var places = [
-          Place(
-              id: '1',
-              name: 'Nikita',
-              description: 'Kanunov',
-              isFreeVisit: true,
-              abonements: null,
-              basedOrganizations: null,
-              holderOrganization: null,
-              location: null,
-              categoriesIDs: null,
-              tagsUIDs: null)
-        ];
-        Future.delayed(const Duration(milliseconds: 500));
-        yield MapLoaded(markers: places);
+        LatLng currentPostion;
+        var position = await GeolocatorPlatform.instance
+            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+          currentPostion = LatLng(position.latitude, position.longitude);
+
+
+        yield MapLoaded(location: currentPostion);
       } catch (_) {
         yield MapFailure();
       }
