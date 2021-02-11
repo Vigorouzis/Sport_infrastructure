@@ -28,7 +28,6 @@ class PlacesListBloc extends Bloc<PlacesListEvent, PlacesListState> {
               categoriesIDs: null,
               tagsUIDs: null)
         ];
-        Future.delayed(const Duration(milliseconds: 500));
         yield PlacesListLoaded(places: places);
       } catch (_) {
         yield PlacesListFailure();
