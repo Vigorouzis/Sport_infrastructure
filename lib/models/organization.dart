@@ -1,16 +1,15 @@
-import 'package:sport_infrastructure/models/place.dart';
-
-import 'abonement.dart';
-
 class Organization {
-  String id;
-  String name;
-  String mainAddress;
-  List<Abonement> abonements;
-  List<Place> places;
-  List<String> categoriesIDs;
-  List<String> tagsUIDs;
+  final String uid;
+  final String name;
+  final String description;
 
-  Organization(this.id, this.name, this.mainAddress, this.abonements,
-      this.places, this.categoriesIDs, this.tagsUIDs);
+  Organization({this.uid, this.name, this.description});
+
+  factory Organization.fromJson(Map<String, dynamic> json) {
+    return Organization(
+      uid: json['uid'],
+      name: json['name'],
+      description: json['description'],
+    );
+  }
 }

@@ -1,44 +1,59 @@
-import 'package:sport_infrastructure/models/organization.dart';
-
-import 'abonement.dart';
-import 'location_info.dart';
+import 'package:flutter/material.dart';
 
 class Place {
-  String id;
-  String name;
-  String description;
-  Organization holderOrganization;
-  List<Organization> basedOrganizations;
-  bool isFreeVisit;
-  List<Abonement> abonements;
-  LocationInfo location;
-  List<String> categoriesIDs;
-  List<String> tagsUIDs;
+  final String uid;
+  final String name;
+  final String buildingName;
+  final String buildingType;
+  final String description;
+  final String address;
+  final String city;
+  final String openingHours;
+  final String postIndex;
+  final String webSite;
+  final String phone;
+  final String email;
+  final String facebook;
+  final String instagram;
+  final String twitter;
+  final String vk;
 
   Place(
-      {this.id,
-      this.name,
-      this.description,
-      this.holderOrganization,
-      this.basedOrganizations,
-      this.isFreeVisit,
-      this.abonements,
-      this.location,
-      this.categoriesIDs,
-      this.tagsUIDs});
+      {@required this.uid,
+      @required this.name,
+      @required this.buildingName,
+      @required this.buildingType,
+      @required this.description,
+      @required this.address,
+      @required this.city,
+      @required this.openingHours,
+      @required this.postIndex,
+      @required this.webSite,
+      @required this.phone,
+      @required this.email,
+      this.facebook,
+      this.instagram,
+      this.twitter,
+      this.vk});
 
   factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
-      id: json['id'],
+      uid: json['uid'],
       name: json['name'],
+      buildingName: json['buildingName'],
+      buildingType: json['buildingType'],
       description: json['description'],
-      holderOrganization: json['holderOrganization'],
-      basedOrganizations: json['basedOrganizations'],
-      isFreeVisit: json['isFreeVisit'],
-      abonements: json['abonements'],
-      location: json['location'],
-      categoriesIDs: json['categoriesIDs'],
-      tagsUIDs: json['tagsUIDs'],
+      address: json['address'],
+      city: json['city'],
+      openingHours: json['openingHours'],
+      postIndex: json['postIndex'],
+      webSite: json['webSite'],
+      phone: json['phone'],
+      email: json['email'],
+      facebook: json['facebook'],
+      instagram: json['instagram'],
+      twitter: json['twitter'],
+      vk: json['vk'],
     );
   }
 }
