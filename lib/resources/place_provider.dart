@@ -10,7 +10,7 @@ class PlaceProvider{
 
       Response response = await Dio().get(BASE_URL);
 
-      if(response.statusCode >= 200 && response.statusCode <=299){
+      if(response.statusCode == 200){
         final List<dynamic> placeJson = json.decode(response.data);
         return placeJson.map((json) => Place.fromJson(json)).toList();
       }else{

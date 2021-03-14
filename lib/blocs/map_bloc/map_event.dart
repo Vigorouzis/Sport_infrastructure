@@ -4,7 +4,6 @@ abstract class MapEvent extends Equatable {
   const MapEvent();
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 

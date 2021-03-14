@@ -17,24 +17,29 @@ class Place {
   final String instagram;
   final String twitter;
   final String vk;
+  final String latitude;
+  final String longitude;
 
-  Place(
-      {@required this.uid,
-      @required this.name,
-      @required this.buildingName,
-      @required this.buildingType,
-      @required this.description,
-      @required this.address,
-      @required this.city,
-      @required this.openingHours,
-      @required this.postIndex,
-      @required this.webSite,
-      @required this.phone,
-      @required this.email,
-      this.facebook,
-      this.instagram,
-      this.twitter,
-      this.vk});
+  Place({
+    @required this.uid,
+    @required this.name,
+    @required this.buildingName,
+    @required this.buildingType,
+    @required this.description,
+    @required this.address,
+    @required this.city,
+    @required this.openingHours,
+    @required this.postIndex,
+    @required this.webSite,
+    @required this.phone,
+    @required this.email,
+    this.facebook,
+    this.instagram,
+    this.twitter,
+    this.vk,
+    @required this.latitude,
+    @required this.longitude,
+  });
 
   factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
@@ -54,6 +59,8 @@ class Place {
       instagram: json['instagram'],
       twitter: json['twitter'],
       vk: json['vk'],
+      latitude:json['latitude'],
+      longitude:json['longitude'],
     );
   }
 }

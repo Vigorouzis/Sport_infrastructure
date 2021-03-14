@@ -15,14 +15,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     if (event is GetMapLocations) {
       yield MapLoading();
       try {
-        LatLng currentPostion;
+        LatLng currentPosition;
         var position = await GeolocatorPlatform.instance
             .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-          currentPostion = LatLng(position.latitude, position.longitude);
+        currentPosition = LatLng(position.latitude, position.longitude);
 
-
-        yield MapLoaded(location: currentPostion);
+        yield MapLoaded(location: currentPosition);
       } catch (_) {
         yield MapFailure();
       }
