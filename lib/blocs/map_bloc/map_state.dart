@@ -6,7 +6,6 @@ abstract class MapState extends Equatable {
   const MapState();
 
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 

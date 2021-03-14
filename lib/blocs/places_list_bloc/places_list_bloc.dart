@@ -5,9 +5,9 @@ import 'package:sport_infrastructure/models/place.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
 
 class PlacesListBloc extends Bloc<PlacesListEvent, PlacesListState> {
-  final PlaceRepository placeRepository;
+  final PlaceRepository _placeRepository;
 
-  PlacesListBloc(this.placeRepository) : super(InitialPlacesListState());
+  PlacesListBloc(this._placeRepository) : super(InitialPlacesListState());
 
   @override
   Stream<PlacesListState> mapEventToState(PlacesListEvent event) async* {
@@ -15,19 +15,7 @@ class PlacesListBloc extends Bloc<PlacesListEvent, PlacesListState> {
       yield PlacesListLoading();
       try {
         //TODO: Get data from server
-        var places = [
-          Place(
-              id: '1',
-              name: 'Nikita',
-              description: 'Kanunov',
-              isFreeVisit: true,
-              abonements: null,
-              basedOrganizations: null,
-              holderOrganization: null,
-              location: null,
-              categoriesIDs: null,
-              tagsUIDs: null)
-        ];
+        var places = await _placeRepository.getAllPlace();
         yield PlacesListLoaded(places: places);
       } catch (_) {
         yield PlacesListFailure();
