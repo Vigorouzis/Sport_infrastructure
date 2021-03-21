@@ -14,80 +14,79 @@ class _AppScreenState extends State<AppScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        
-      ),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Sport kld', style: TextStyle(
-
-        ),),
-      ),
+        drawer: Drawer(),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Sport kld',
+            style: TextStyle(),
+          ),
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Padding(
-              padding: EdgeInsets.only(top: 8.0.h, bottom: 8.0.h),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Color(0xFF000000)),
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8.0.h, bottom: 8.0.h),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(color: Color(0xFF000000)),
+                      ),
+                      prefixIcon: Icon(Icons.search),
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.search),
                 ),
               ),
-            ),
+              ContentSlider(),
+              Padding(
+                padding: EdgeInsets.only(left: 50.w, top: 30.h),
+                child: Column(
+                  children: [
+                    DefaultButton(
+                      onTap: () => print('hello'),
+                      label: 'Места',
+                      height: 50.h,
+                      width: 100.w,
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      haveShadow: true,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: DefaultButton(
+                        onTap: () => print('hello'),
+                        label: 'Организации',
+                        height: 50.h,
+                        width: 100.w,
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        haveShadow: true,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: DefaultButton(
+                        onTap: () => print('hello'),
+                        label: 'События',
+                        height: 50.h,
+                        width: 100.w,
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        haveShadow: true,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
-          ContentSlider(),
-          Padding(
-            padding:  EdgeInsets.only(left: 50.w, top: 30.h),
-            child: Column(
-              children: [
-                DefaultButton(
-                  onTap: () => print('hello'),
-                  label: 'Места',
-                  height: 50.h,
-                  width: 100.w,
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  haveShadow: true,
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(top: 8.h),
-                  child: DefaultButton(
-                    onTap: () => print('hello'),
-                    label: 'Организации',
-                    height: 50.h,
-                    width: 100.w,
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    haveShadow: true,
-                  ),
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(top: 8.h),
-                  child: DefaultButton(
-                    onTap: () => print('hello'),
-                    label: 'События',
-                    height: 50.h,
-                    width: 100.w,
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    haveShadow: true,
-                  ),
-                )
-              ],
-            ),
-          )
-      ],
-    ),
         ));
   }
 }

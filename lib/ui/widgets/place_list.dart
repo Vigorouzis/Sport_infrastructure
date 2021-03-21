@@ -1,18 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_bloc.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_state.dart';
 
-
-
 class PlaceList extends StatefulWidget {
   @override
   _PlaceListState createState() => _PlaceListState();
 }
-
-
 
 class _PlaceListState extends State<PlaceList> {
   PlacesListBloc _placesListBloc;
@@ -28,20 +23,20 @@ class _PlaceListState extends State<PlaceList> {
   Widget build(BuildContext context) {
     return BlocBuilder<PlacesListBloc, PlacesListState>(
         builder: (context, state) {
-          if (state is PlacesListLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is PlacesListFailure) {
-            return Center(
-              child: Text('failed to fetch place'),
-            );
-          }
-          if (state is PlacesListLoaded) {
-            return ListView.builder(
-                itemCount: state.places.length,
-                itemBuilder: (context, index) => Container(
+      if (state is PlacesListLoading) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      if (state is PlacesListFailure) {
+        return Center(
+          child: Text('failed to fetch place'),
+        );
+      }
+      if (state is PlacesListLoaded) {
+        return ListView.builder(
+            itemCount: state.places.length,
+            itemBuilder: (context, index) => Container(
                   child: ListTile(
                     leading: Text('$index'),
                     title: Column(
@@ -51,15 +46,14 @@ class _PlaceListState extends State<PlaceList> {
                     ),
                   ),
                 ));
-          }
-          return null;
-        });
+      }
+      return null;
+    });
   }
 
   @override
   void dispose() {
+    _placesListBloc.close();
     super.dispose();
-    _placesListBloc.drain();
   }
 }
-

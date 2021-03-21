@@ -40,11 +40,11 @@ class DefaultButton extends StatelessWidget {
                   ),
 
               ],
-              borderRadius: BorderRadius.circular(30.r)),
+              borderRadius: BorderRadius.circular(10.r)),
           child: Center(
             child: Text(
               label,
-              style: TextStyle(color: textColor),
+              style: TextStyle(color: textColor ?? Colors.black),
             ),
           ),
         ),
