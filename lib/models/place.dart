@@ -17,8 +17,8 @@ class Place {
   final String instagram;
   final String twitter;
   final String vk;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
 
   Place({
     @required this.uid,
@@ -59,8 +59,8 @@ class Place {
       instagram: json['instagram'],
       twitter: json['twitter'],
       vk: json['vk'],
-      latitude:json['latitude'],
-      longitude:json['longitude'],
+      latitude:json['lat'],
+      longitude:json['lon'],
     );
   }
 }

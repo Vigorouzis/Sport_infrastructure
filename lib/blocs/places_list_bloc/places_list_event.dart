@@ -7,4 +7,8 @@ abstract class PlacesListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PlacesListFetched extends PlacesListEvent {}
+class PlacesListFetched extends PlacesListEvent {
+  final String placeSearch;
+
+  const PlacesListFetched({this.placeSearch});
+}

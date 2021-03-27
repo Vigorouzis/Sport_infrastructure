@@ -3,28 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sport_infrastructure/blocs/details_screen_bloc/details_screen.dart';
+import 'package:sport_infrastructure/models/place.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
 import 'package:sport_infrastructure/widgets/buttons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailScreen extends StatefulWidget {
+  final Place _place;
+
+  DetailScreen({Place place}) : _place = place;
+
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen>
     with SingleTickerProviderStateMixin {
-  PlaceRepository _placeRepository;
   DetailsScreenBloc _detailsScreenBloc;
   TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _placeRepository = PlaceRepository();
     _tabController = TabController(length: 3, vsync: this);
-    _detailsScreenBloc = DetailsScreenBloc(_placeRepository);
-    _detailsScreenBloc.add(GetMapLocations());
+    _detailsScreenBloc = DetailsScreenBloc();
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -33,46 +35,55 @@ class _DetailScreenState extends State<DetailScreen>
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    _detailsScreenBloc.close();
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Альботрос Юг'),
+        title: Text(widget._place.name),
       ),
       body: SafeArea(
         child: BlocProvider(
-          create: (_) => DetailsScreenBloc(_placeRepository),
+          create: (_) => DetailsScreenBloc(),
           child: Builder(
             builder: (context) =>
-                BlocBuilder<DetailsScreenBloc, DetailsScreenState>(
+                BlocConsumer<DetailsScreenBloc, DetailsScreenState>(
               bloc: _detailsScreenBloc,
+              listener: (context, state) {},
               builder: (context, state) {
                 print(state);
-                if (state is DetailsScreenLoaded) {
-                  return Column(
-                    children: [
-                      Map(
-                        location: state.location,
-                      ),
-                      TabButtons(
-                        controller: _tabController,
-                      ),
-                      Container(
+
+                return Column(
+                  children: [
+                    Map(
+                      location: LatLng(widget._place.latitude,
+                          widget._place.longitude),
+                    ),
+                    TabButtons(
+                      controller: _tabController,
+                    ),
+                    Expanded(
+                      child: Container(
                         width: double.infinity,
-                        height: 468.h,
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                             _TabOne(),
-                             _TabOne(),
-                             _TabOne(),
+                            _TabOne(),
+                            _TabOne(),
+                            _TabOne(),
                           ],
                         ),
-                      )
-                    ],
-                  );
-                }
-                return Container();
+                      ),
+                    )
+                  ],
+                );
               },
             ),
           ),
@@ -84,7 +95,6 @@ class _DetailScreenState extends State<DetailScreen>
 
 class Map extends StatefulWidget {
   final LatLng location;
-  GoogleMapController _mapController;
 
   Map({this.location});
 
@@ -96,7 +106,7 @@ class _MapState extends State<Map> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       height: 200.h,
       child: GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -108,9 +118,9 @@ class _MapState extends State<Map> {
         mapType: MapType.normal,
         zoomGesturesEnabled: true,
         zoomControlsEnabled: false,
-        onMapCreated: (GoogleMapController controller) {
-          widget._mapController = controller;
-        },
+        // onMapCreated: (GoogleMapController controller) {
+        //   widget._mapController = controller;
+        // },
       ),
     );
   }
@@ -275,4 +285,3 @@ class _TabOne extends StatelessWidget {
     );
   }
 }
-

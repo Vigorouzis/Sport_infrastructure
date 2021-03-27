@@ -13,13 +13,6 @@ class InitialMapState extends DetailsScreenState {}
 
 class DetailsScreenLoading extends DetailsScreenState {}
 
-class DetailsScreenLoaded extends DetailsScreenState {
-  final LatLng location;
-
-  const DetailsScreenLoaded({this.location});
-
-  @override
-  List<Object> get props => [location];
-}
+class DetailsScreenLoaded extends DetailsScreenState {}
 
 class DetailsScreenFailure extends DetailsScreenState {}

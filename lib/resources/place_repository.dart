@@ -1,7 +1,9 @@
 import 'package:sport_infrastructure/models/place.dart';
-import 'package:sport_infrastructure/resources/place_provider.dart';
+import 'package:sport_infrastructure/resources/place_api_provider.dart';
 
-class PlaceRepository{
-  PlaceProvider _placeProvider = PlaceProvider();
-  Future<List<Place>> getAllPlace() => _placeProvider.getPlace();
+class PlaceRepository {
+  PlaceApiProvider _placeProvider = PlaceApiProvider();
+
+  Future<List<Place>> getPlaceByName({String value}) =>
+      _placeProvider.getPlaceByName(value);
 }
