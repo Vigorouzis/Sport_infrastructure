@@ -53,7 +53,7 @@ class Place {
       openingHours: json['openingHours'],
       postIndex: json['postIndex'],
       webSite: json['webSite'],
-      phone: json['phone'],
+      phone: json['phones'],
       email: json['email'],
       facebook: json['facebook'],
       instagram: json['instagram'],
