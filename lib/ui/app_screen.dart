@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_bloc.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
-import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_state.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
 import 'package:sport_infrastructure/ui/search_result_screen.dart';
 import 'package:sport_infrastructure/widgets/buttons.dart';
@@ -16,118 +14,108 @@ class AppScreen extends StatefulWidget {
 
 class _AppScreenState extends State<AppScreen> {
   TextEditingController _searchController;
-  PlaceRepository _placeRepository;
-  PlacesListBloc _placesListBloc;
 
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
-    _placeRepository = PlaceRepository();
-    _placesListBloc = PlacesListBloc(_placeRepository);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PlacesListBloc(_placeRepository),
-      child: Builder(
-        builder: (context) => BlocConsumer<PlacesListBloc, PlacesListState>(
-          bloc: _placesListBloc,
-          listener: (context, state) {
-            print(state);
-            if (state is PlacesListLoaded) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchResultScreen(
-                            places: state.places,
-                          )));
-            }
-          },
-          builder: (context, state) => Scaffold(
-            drawer: Drawer(),
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                'Sport kld',
-                style: TextStyle(),
+    return Scaffold(
+      drawer: Drawer(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Sport kld',
+          style: TextStyle(),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8.0.h, bottom: 8.0.h),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(color: Color(0xFF000000)),
+                      ),
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            body: SafeArea(
-              child: SingleChildScrollView(
+              ContentSlider(),
+              Padding(
+                padding: EdgeInsets.only(left: 50.w, top: 30.h),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25.w),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 8.0.h, bottom: 8.0.h),
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Search',
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: Color(0xFF000000)),
+                  children: [
+                    DefaultButton(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchResultScreen(
+                              isPlace: true,
+                              requestText: _searchController.text,
                             ),
-                            prefixIcon: Icon(Icons.search),
                           ),
-                        ),
+                        );
+                      },
+                      label: 'Места',
+                      height: 50.h,
+                      width: 100.w,
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      haveShadow: true,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: DefaultButton(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchResultScreen(
+                                isOrganization: true,requestText: _searchController.text,
+                              ),
+                            ),
+                          );
+                        },
+                        label: 'Организации',
+                        height: 50.h,
+                        width: 100.w,
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        haveShadow: true,
                       ),
                     ),
-                    ContentSlider(),
                     Padding(
-                      padding: EdgeInsets.only(left: 50.w, top: 30.h),
-                      child: Column(
-                        children: [
-                          DefaultButton(
-                            onTap: () {
-                              if (_searchController.text.isNotEmpty) {
-                                _placesListBloc.add(PlacesListFetched(
-                                    placeSearch: _searchController.text));
-                              }
-                            },
-                            label: 'Места',
-                            height: 50.h,
-                            width: 100.w,
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            haveShadow: true,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.h),
-                            child: DefaultButton(
-                              onTap: () => print('hello'),
-                              label: 'Организации',
-                              height: 50.h,
-                              width: 100.w,
-                              color: Colors.blue,
-                              textColor: Colors.white,
-                              haveShadow: true,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.h),
-                            child: DefaultButton(
-                              onTap: () => print('hello'),
-                              label: 'События',
-                              height: 50.h,
-                              width: 100.w,
-                              color: Colors.blue,
-                              textColor: Colors.white,
-                              haveShadow: true,
-                            ),
-                          )
-                        ],
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: DefaultButton(
+                        onTap: () => print('hello'),
+                        label: 'События',
+                        height: 50.h,
+                        width: 100.w,
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        haveShadow: true,
                       ),
                     )
                   ],
                 ),
-              ),
-            ),
+              )
+            ],
           ),
         ),
       ),

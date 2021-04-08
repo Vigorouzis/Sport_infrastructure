@@ -12,3 +12,9 @@ class PlacesListFetched extends PlacesListEvent {
 
   const PlacesListFetched({this.placeSearch});
 }
+
+class OrganizationListFetched extends PlacesListEvent {
+  final String organizationSearch;
+
+  const OrganizationListFetched({this.organizationSearch});
+}
