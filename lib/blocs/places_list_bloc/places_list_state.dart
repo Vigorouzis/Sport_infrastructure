@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sport_infrastructure/models/organization.dart';
 import 'package:sport_infrastructure/models/place.dart';
 
 abstract class PlacesListState extends Equatable {
@@ -14,11 +15,12 @@ class PlacesListLoading extends PlacesListState {}
 
 class PlacesListLoaded extends PlacesListState {
   final List<Place> places;
+  final List<Organization> organization;
 
-  const PlacesListLoaded({this.places});
+  const PlacesListLoaded({this.places, this.organization});
 
   @override
-  List<Object> get props => [places];
+  List<Object> get props => [places, organization];
 }
 
 class PlacesListFailure extends PlacesListState {}
