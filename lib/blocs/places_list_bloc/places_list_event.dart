@@ -18,3 +18,4 @@ class OrganizationListFetched extends PlacesListEvent {
 
   const OrganizationListFetched({this.organizationSearch});
 }
+

@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_bloc.dart';
-import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
-import 'package:sport_infrastructure/resources/place_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sport_infrastructure/resources/shared_prefs.dart';
+import 'package:sport_infrastructure/ui/event_screens/event_list_screen.dart';
 import 'package:sport_infrastructure/ui/search_result_screen.dart';
 import 'package:sport_infrastructure/widgets/buttons.dart';
 
@@ -14,6 +14,9 @@ class AppScreen extends StatefulWidget {
 
 class _AppScreenState extends State<AppScreen> {
   TextEditingController _searchController;
+  String access_token;
+  String refresh_token;
+  SharedPrefs _prefs = SharedPrefs();
 
   @override
   void initState() {
@@ -87,7 +90,8 @@ class _AppScreenState extends State<AppScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => SearchResultScreen(
-                                isOrganization: true,requestText: _searchController.text,
+                                isOrganization: true,
+                                requestText: _searchController.text,
                               ),
                             ),
                           );
@@ -103,7 +107,12 @@ class _AppScreenState extends State<AppScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 8.h),
                       child: DefaultButton(
-                        onTap: () => print('hello'),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventListScreen(),
+                          ),
+                        ),
                         label: 'События',
                         height: 50.h,
                         width: 100.w,

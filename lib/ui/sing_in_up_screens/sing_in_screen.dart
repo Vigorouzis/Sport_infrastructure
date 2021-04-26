@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_infrastructure/blocs/authorization_bloc/authorization_bloc.dart';
 import 'package:sport_infrastructure/blocs/authorization_bloc/authorization_event.dart';
 import 'package:sport_infrastructure/resources/sing_in_up_repository.dart';
+import 'package:sport_infrastructure/ui/event_screens/create_event_screen.dart';
+import 'package:sport_infrastructure/ui/sing_in_up_screens/sing_up_screen.dart';
 import 'package:sport_infrastructure/utils/utils.dart';
 import 'package:sport_infrastructure/widgets/widgets.dart';
 
@@ -95,10 +97,19 @@ class _SingInScreenState extends State<SingInScreen> {
                           padding: EdgeInsets.only(
                               top: 30.h, left: 23.w, right: 24.w),
                           child: DefaultButton(
-                            onTap: () => _authorizationBloc.add(
+                            onTap: () {
+                              _authorizationBloc.add(
                                 AuthorizationWithLogin(
                                     login: _login.text,
-                                    password: _password.text)),
+                                    password: _password.text),
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CreateEventScreen(),
+                                ),
+                              );
+                            },
                             textColor: AppColors.greyD9D9D9,
                             color: AppColors.primary,
                             label: 'Продолжить',
@@ -136,7 +147,11 @@ class _SingInScreenState extends State<SingInScreen> {
                             Padding(
                               padding: EdgeInsets.only(top: 36.h),
                               child: GestureDetector(
-                                onTap: () => null,
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SingUpScreen(),
+                                    )),
                                 child: Text(
                                   'Зарегистрироваться',
                                   style: AppTypography.font12SF.copyWith(

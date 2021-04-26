@@ -1,3 +1,4 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:sport_infrastructure/blocs/registration_bloc/registration_bloc.d
 import 'package:sport_infrastructure/blocs/registration_bloc/registration_state.dart';
 import 'package:sport_infrastructure/blocs/registration_bloc/regitration_event.dart';
 import 'package:sport_infrastructure/resources/sing_in_up_repository.dart';
+import 'package:sport_infrastructure/ui/sing_in_up_screens/sing_in_screen.dart';
 import 'package:sport_infrastructure/utils/utils.dart';
 import 'package:sport_infrastructure/widgets/widgets.dart';
 
@@ -125,13 +127,22 @@ class _SingUpScreenState extends State<SingUpScreen> {
                               padding: EdgeInsets.only(
                                   top: 30.h, left: 23.w, right: 24.w),
                               child: DefaultButton(
-                                onTap: () => _registrationBloc.add(
+                                onTap: () {
+                                  _registrationBloc.add(
                                     RegistrationNewUser(
-                                      name: _name.text,
+                                        name: _name.text,
                                         login: _login.text,
                                         password: _password.text,
                                         age: int.parse(_age.text),
-                                        email: _email.text)),
+                                        email: _email.text),
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SingInScreen(),
+                                    ),
+                                  );
+                                },
                                 textColor: AppColors.greyD9D9D9,
                                 color: AppColors.primary,
                                 label: 'Продолжить',
