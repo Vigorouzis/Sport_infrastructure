@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_bloc.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_event.dart';
 import 'package:sport_infrastructure/blocs/places_list_bloc/places_list_state.dart';
@@ -67,6 +68,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     : OrganizationListView(
                         organization: state.organization,
                         places: state.places,
+                        currentGeoPosition: state.currentPosition,
                       );
               }
               return Center(child: CircularProgressIndicator());
@@ -111,11 +113,15 @@ class PlaceListView extends StatelessWidget {
 class OrganizationListView extends StatelessWidget {
   final List<Organization> _organization;
   final List<Place> _places;
+  final LatLng _currentGeoPosition;
 
   const OrganizationListView(
-      {List<Organization> organization, List<Place> places})
+      {List<Organization> organization,
+      List<Place> places,
+      LatLng currentGeoPosition})
       : _organization = organization,
-        _places = places;
+        _places = places,
+        _currentGeoPosition = currentGeoPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +135,7 @@ class OrganizationListView extends StatelessWidget {
               builder: (_) => DetailScreenForOrganization(
                 organization: _organization[index],
                 places: _places,
+                currentGeoPosition: _currentGeoPosition,
               ),
             ),
           ),

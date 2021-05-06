@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sport_infrastructure/blocs/details_screen_bloc/details_screen.dart';
 import 'package:sport_infrastructure/models/place.dart';
-import 'package:sport_infrastructure/resources/place_repository.dart';
+import 'package:sport_infrastructure/utils/fonts.dart';
 import 'package:sport_infrastructure/widgets/buttons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -71,7 +69,7 @@ class _DetailScreenState extends State<DetailScreen>
                     _TabTwo(
                       place: widget._place,
                     ),
-                    _TabOne(),
+                    _TabThree(),
                   ],
                 ),
               ),
@@ -356,7 +354,9 @@ class _TabTwo extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(left: 20.w, top: 5.h),
-              child: Text(_place.webSite.isNotEmpty? 'https://www.${_place.webSite}': 'Не указано'),
+              child: Text(_place.webSite.isNotEmpty
+                  ? 'https://www.${_place.webSite}'
+                  : 'Не указано'),
             )
           ],
         ),
@@ -377,7 +377,7 @@ class _TabTwo extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, top: 5.h),
               child: Column(
                 children: [
-                  Text(_place.phone ?? 'Не указано'),
+                  Text(  _place.phone.isNotEmpty ? _place.phone : 'Не указано'),
                 ],
               ),
             )
@@ -424,26 +424,30 @@ class _TabTwo extends StatelessWidget {
                       Text(_place.vk.isNotEmpty ? _place.vk : 'Не указано'),
                       Padding(
                         padding: EdgeInsets.only(top: 5.h),
-                        child: Text(_place.instagram.isNotEmpty ? _place.instagram : 'Не указано'),
+                        child: Text(_place.instagram.isNotEmpty
+                            ? _place.instagram
+                            : 'Не указано'),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 5.h),
-                        child: Text(_place.twitter.isNotEmpty ? _place.twitter : 'Не указано'),
+                        child: Text(_place.twitter.isNotEmpty
+                            ? _place.twitter
+                            : 'Не указано'),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 5.h),
-                        child: Text(_place.facebook.isNotEmpty ? _place.facebook : 'Не указано'),
+                        child: Text(_place.facebook.isNotEmpty
+                            ? _place.facebook
+                            : 'Не указано'),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-
           ],
         ),
       ),
-
       Container(
         width: MediaQuery.of(context).size.width,
         height: 50.h,
@@ -460,7 +464,8 @@ class _TabTwo extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, top: 5.h),
               child: Column(
                 children: [
-                  Text(_place.email.isNotEmpty ? _place.facebook : 'Не указано'),
+                  Text(
+                      _place.email.isNotEmpty ? _place.email : 'Не указано'),
                 ],
               ),
             )
@@ -468,5 +473,16 @@ class _TabTwo extends StatelessWidget {
         ),
       ),
     ]);
+  }
+}
+
+class _TabThree extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Text('Отзывов пока нет',style: AppTypography.font20SF,),
+      ),
+    );
   }
 }

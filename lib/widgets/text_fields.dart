@@ -54,3 +54,35 @@ class DefaultTextField extends StatelessWidget {
     ),
   );
 }
+
+class SearchTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final Widget leading;
+
+  const SearchTextField({Key key, this.controller, this.hintText, this.leading}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      child: Padding(
+        padding: EdgeInsets.only(top: 8.0.h, bottom: 8.0.h),
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hintText,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderSide: BorderSide(color: Color(0xFF000000)),
+            ),
+            prefixIcon: leading,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sport_infrastructure/models/organization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,11 +8,15 @@ import 'package:sport_infrastructure/models/place.dart';
 class DetailScreenForOrganization extends StatefulWidget {
   final Organization _organization;
   final List<Place> _places;
+  final LatLng _currentGeoPosition;
 
   const DetailScreenForOrganization(
-      {Organization organization, List<Place> places})
+      {Organization organization,
+      List<Place> places,
+      LatLng currentGeoPosition})
       : _organization = organization,
-        _places = places;
+        _places = places,
+        _currentGeoPosition = currentGeoPosition;
 
   @override
   _DetailScreenForOrganizationState createState() =>
@@ -22,10 +27,19 @@ class _DetailScreenForOrganizationState
     extends State<DetailScreenForOrganization>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  LatLng _currentGeo;
+  List<LatLng> _locations = [];
+
+  void setLocations() {
+    for (var i in widget._places) {
+      _locations.add(LatLng(i.longitude, i.latitude));
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    setLocations();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
@@ -44,6 +58,10 @@ class _DetailScreenForOrganizationState
       body: SafeArea(
         child: Column(
           children: [
+            Map(
+              locations: _locations,
+              currentGeo: widget._currentGeoPosition,
+            ),
             TabButtons(
               controller: _tabController,
             ),
@@ -57,7 +75,9 @@ class _DetailScreenForOrganizationState
                       organization: widget._organization,
                     ),
                     _TabTwo(),
-                    _TabThree(places: widget._places,),
+                    _TabThree(
+                      places: widget._places,
+                    ),
                   ],
                 ),
               ),
@@ -69,55 +89,62 @@ class _DetailScreenForOrganizationState
   }
 }
 
-// class Map extends StatefulWidget {
-//   final List<LatLng> locations;
-//
-//   Map({this.locations});
-//
-//   @override
-//   _MapState createState() => _MapState();
-// }
+class Map extends StatefulWidget {
+  final List<LatLng> locations;
+  final LatLng currentGeo;
 
-// class _MapState extends State<Map> {
-//   GoogleMapController _mapController;
-//
-//   Set<Marker> _markers = {};
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     Marker startMarker = Marker(
-//       markerId: MarkerId('position'),
-//       position: LatLng(
-//         widget.location.latitude,
-//         widget.location.longitude,
-//       ),
-//       icon: BitmapDescriptor.defaultMarker,
-//     );
-//     _markers.add(startMarker);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: MediaQuery.of(context).size.width,
-//       height: 200.h,
-//       child: GoogleMap(
-//         initialCameraPosition: CameraPosition(
-//           target: widget.location,
-//           zoom: 12,
-//         ),
-//         myLocationEnabled: true,
-//         myLocationButtonEnabled: false,
-//         mapType: MapType.normal,
-//         markers: _markers,
-//         onMapCreated: (GoogleMapController controller) {
-//           _mapController = controller;
-//         },
-//       ),
-//     );
-//   }
-// }
+  const Map({this.locations, this.currentGeo});
+
+  @override
+  _MapState createState() => _MapState();
+}
+
+class _MapState extends State<Map> {
+  GoogleMapController _mapController;
+
+  Set<Marker> _markers = {};
+
+  @override
+  void initState() {
+    super.initState();
+    int index = 0;
+    for (var i in widget.locations) {
+      if (i != null) {
+        index++;
+        Marker startMarker = Marker(
+          markerId: MarkerId('position $index'),
+          position: LatLng(
+            i.latitude,
+            i.longitude,
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        );
+        _markers.add(startMarker);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 200.h,
+      child: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: widget.currentGeo,
+          zoom: 10,
+        ),
+        myLocationEnabled: true,
+        myLocationButtonEnabled: false,
+        mapType: MapType.normal,
+        markers: _markers,
+        onMapCreated: (GoogleMapController controller) {
+          _mapController = controller;
+        },
+      ),
+    );
+  }
+}
 
 class TabButtons extends StatefulWidget {
   final TabController _tabController;

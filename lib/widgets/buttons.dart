@@ -16,7 +16,7 @@ class DefaultButton extends StatelessWidget {
       this.label,
       this.width,
       this.height,
-      this.haveShadow,
+      this.haveShadow = true,
       this.color,
       this.borderColor,
       this.textColor,
@@ -40,7 +40,7 @@ class DefaultButton extends StatelessWidget {
                   ),
 
               ],
-              borderRadius: BorderRadius.circular(10.r)),
+              borderRadius: BorderRadius.circular(10)),
           child: Center(
             child: Text(
               label,
