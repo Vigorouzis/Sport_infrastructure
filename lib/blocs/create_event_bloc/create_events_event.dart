@@ -12,18 +12,21 @@ class CreateEventsEvent extends CreateEventEvent {
   final String description;
   final String date;
   final String time;
-  final String limitNumber;
+  final int limitNumber;
   final bool isPrivate;
   final String password;
+  final String placeUid;
 
-  const CreateEventsEvent(
-      {this.name,
-      this.description,
-      this.date,
-      this.time,
-      this.limitNumber,
-      this.isPrivate,
-      this.password});
+  const CreateEventsEvent({
+    this.name,
+    this.description,
+    this.date,
+    this.time,
+    this.limitNumber,
+    this.isPrivate,
+    this.password,
+    this.placeUid,
+  });
 
   @override
   List<Object> get props =>

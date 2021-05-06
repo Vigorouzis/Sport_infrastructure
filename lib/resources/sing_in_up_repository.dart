@@ -10,6 +10,6 @@ class SingInUpRepository {
   Future<List<String>> authorization({String login, String password}) =>
       _singInUpProvider.authorization(login, password);
 
-  Future<void> logout({String accessToken}) =>
-      _singInUpProvider.logout(accessToken);
+  Future<void> logout() =>
+      _singInUpProvider.logout();
 }

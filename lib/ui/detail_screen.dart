@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sport_infrastructure/blocs/details_screen_bloc/details_screen.dart';
 import 'package:sport_infrastructure/models/place.dart';
-import 'package:sport_infrastructure/resources/place_repository.dart';
 import 'package:sport_infrastructure/utils/fonts.dart';
 import 'package:sport_infrastructure/widgets/buttons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

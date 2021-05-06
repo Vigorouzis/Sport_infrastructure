@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:sport_infrastructure/models/organization.dart';
-import 'package:sport_infrastructure/models/place.dart';
 
 abstract class AuthorizationState extends Equatable {
   const AuthorizationState();

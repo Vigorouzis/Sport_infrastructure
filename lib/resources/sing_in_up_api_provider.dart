@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_infrastructure/resources/shared_prefs.dart';
 import 'package:sport_infrastructure/utils/constants/api_constants.dart';
 
@@ -59,7 +58,11 @@ class SingInUpApiProvider {
     }
   }
 
-  Future<void> logout(String accessToken) async {
+  Future<void> logout() async {
+    SharedPrefs _prefs = SharedPrefs();
+
+    var accessToken = await _prefs.read('access_token');
+
     Response response = await Dio().post(
       ApiConst.logoutURL,
       options: Options(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_infrastructure/models/event.dart';
+import 'package:sport_infrastructure/resources/event_repository.dart';
 import 'package:sport_infrastructure/resources/shared_prefs.dart';
 import 'package:sport_infrastructure/resources/sing_in_up_api_provider.dart';
 import 'package:sport_infrastructure/ui/event_screens/create_event_screen.dart';
@@ -13,6 +14,9 @@ class EventListScreen extends StatefulWidget {
 }
 
 class _EventListScreenState extends State<EventListScreen> {
+
+  EventRepository _repository;
+
   List<Event> _events = [
     Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
     Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
@@ -51,8 +55,8 @@ class _EventListScreenState extends State<EventListScreen> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () async {
-                  var token = await _prefs.read('access_token');
-                  await _singInUpProvider.logout(token);
+
+                  await _singInUpProvider.logout();
                 },
                 child: Icon(Icons.more_vert),
               )),

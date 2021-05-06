@@ -1,3 +1,4 @@
+import 'package:sport_infrastructure/models/event.dart';
 import 'package:sport_infrastructure/resources/event_api_provider.dart';
 
 class EventRepository {
@@ -8,11 +9,13 @@ class EventRepository {
           String description,
           String date,
           String time,
-          String limitNumber,
+          int limitNumber,
           bool isPrivate,
           String password,
           String placeUid,
           bool isOver}) =>
       _eventProvider.createNewEvent(name, description, date, time, limitNumber,
           isPrivate, password, placeUid, isOver);
+
+  Future<List<Event>> getEvents() => _eventProvider.getEvents();
 }

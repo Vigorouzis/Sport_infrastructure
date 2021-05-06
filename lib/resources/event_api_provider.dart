@@ -12,7 +12,7 @@ class EventApiProvider {
       String description,
       String date,
       String time,
-      String limitNumber,
+      int limitNumber,
       bool isPrivate,
       String password,
       String placeUid,
@@ -20,7 +20,7 @@ class EventApiProvider {
     var params = {
       'name': name,
       'description': description,
-      'date': date,
+      'dates': date,
       'time': time,
       'visitorsLimit': limitNumber,
       'isPrivate': isPrivate,
@@ -28,19 +28,26 @@ class EventApiProvider {
       'placeUid': placeUid,
       'isOver': isOver,
     };
+
+    SharedPrefs _prefs = SharedPrefs();
+
+    var token = await _prefs.read('access_token');
+
     Response response = await Dio().post(
-      ApiConst.placeURL,
+      ApiConst.createEventUrl,
       options: Options(headers: {
         HttpHeaders.contentTypeHeader: "application/json",
+        'Authorization': 'Bearer $token',
       }),
       data: jsonEncode(params),
     );
-    SharedPrefs _prefs = SharedPrefs();
 
     if (response.statusCode == 200) {
-      await _prefs.save('place_uid', response.data);
+      print(response.data);
     } else {
       throw Exception('Error fetching places');
     }
   }
+
+  Future<void> getEvents() async {}
 }

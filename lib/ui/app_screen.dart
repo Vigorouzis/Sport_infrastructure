@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sport_infrastructure/resources/shared_prefs.dart';
 import 'package:sport_infrastructure/ui/event_screens/event_list_screen.dart';
 import 'package:sport_infrastructure/ui/search_result_screen.dart';
