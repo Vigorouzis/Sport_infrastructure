@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_infrastructure/ui/app_screen.dart';
+import 'package:sport_infrastructure/ui/event_screens/create_event_screen.dart';
+import 'package:sport_infrastructure/ui/event_screens/event_list_screen.dart';
 
 import 'package:sport_infrastructure/ui/search_result_screen.dart';
 import 'detail_screen.dart';
@@ -15,9 +17,11 @@ class App extends StatelessWidget {
         theme: ThemeData(),
         initialRoute: '/',
         routes: {
-          '/': (_) =>  AppScreen(),
+          '/': (_) => AppScreen(),
           '/search_result_screen': (_) => SearchResultScreen(),
           '/detail_screen': (_) => DetailScreen(),
+          '/event_list': (_) => EventListScreen(),
+          '/create_event': (_) => CreateEventScreen(),
         },
       ),
     );

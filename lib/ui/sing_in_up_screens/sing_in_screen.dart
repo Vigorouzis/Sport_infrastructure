@@ -44,7 +44,8 @@ class _SingInScreenState extends State<SingInScreen> {
         create: (_) =>
             AuthorizationBloc(singInUpRepository: _singInUpRepository),
         child: Builder(
-          builder: (context) => BlocConsumer(
+          builder: (context) =>
+              BlocConsumer<AuthorizationBloc, AuthorizationState>(
             bloc: _authorizationBloc,
             listener: (context, state) {
               if (state is AuthorizationSuccess) {
@@ -108,10 +109,14 @@ class _SingInScreenState extends State<SingInScreen> {
                             EdgeInsets.only(top: 30.h, left: 23.w, right: 24.w),
                         child: DefaultButton(
                           onTap: () {
-                            _authorizationBloc.add(
-                              AuthorizationWithLogin(
-                                  login: _login.text, password: _password.text),
-                            );
+                            if (_login.text.isNotEmpty &&
+                                _password.text.isNotEmpty) {
+                              _authorizationBloc.add(
+                                AuthorizationWithLogin(
+                                    login: _login.text,
+                                    password: _password.text),
+                              );
+                            }
                           },
                           textColor: AppColors.greyD9D9D9,
                           color: AppColors.primary,
@@ -137,24 +142,22 @@ class _SingInScreenState extends State<SingInScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 36.h),
-                            child: GestureDetector(
-                              onTap: () => null,
-                              child: Text(
-                                'или?',
-                                style: AppTypography.font12SF.copyWith(
-                                    color: AppColors.grey808088,
-                                    decoration: TextDecoration.underline),
-                              ),
+                            child: Text(
+                              'или',
+                              style: AppTypography.font12SF.copyWith(
+                                  color: AppColors.grey808088,
+                                  decoration: TextDecoration.underline),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 36.h),
                             child: GestureDetector(
                               onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SingUpScreen(),
-                                  )),
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SingUpScreen(),
+                                ),
+                              ),
                               child: Text(
                                 'Зарегистрироваться',
                                 style: AppTypography.font12SF.copyWith(

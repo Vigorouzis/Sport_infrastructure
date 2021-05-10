@@ -30,6 +30,7 @@ class _DetailScreenForOrganizationState
   TabController _tabController;
   LatLng _currentGeo;
   List<LatLng> _locations = [];
+  List<String> _hours;
 
   void setLocations() {
     for (var i in widget._places) {
@@ -43,6 +44,7 @@ class _DetailScreenForOrganizationState
     setLocations();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
+    _hours = widget._places[0].openingHours.split(RegExp('\n'));
   }
 
   void _handleTabSelection() {
@@ -73,9 +75,10 @@ class _DetailScreenForOrganizationState
                   controller: _tabController,
                   children: [
                     _TabOne(
-                      organization: widget._organization,
+                      place: widget._places[0],
+                      hours: _hours,
                     ),
-                    _TabTwo(),
+                    _TabTwo(place: widget._places[0] ),
                     _TabThree(
                       places: widget._places,
                     ),
@@ -217,36 +220,48 @@ class _TabButtonsState extends State<TabButtons> {
 }
 
 class _TabOne extends StatelessWidget {
-  final Organization _organization;
-  final List<Place> _places;
+  final Place _place;
+  final List<String> _hours;
 
-  const _TabOne({Organization organization, List<Place> places})
-      : _organization = organization,
-        _places = places;
+  const _TabOne({Place place, List<String> hours})
+      : _place = place,
+        _hours = hours;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: double.infinity,
-          height: 130.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 3.w,
-                ),
-                child: Text('Местоположение'),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                child: Text(_organization.name),
-              ),
-            ],
-          ),
-        ),
+        // Container(
+        //   width: double.infinity,
+        //   height: 130.h,
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Padding(
+        //         padding: EdgeInsets.only(
+        //           left: 3.w,
+        //         ),
+        //         child: Text('Местоположение'),
+        //       ),
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 20.w, top: 5.h),
+        //         child: Text(_place.address),
+        //       ),
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 20.w, top: 5.h),
+        //         child: Text(_place.postIndex),
+        //       ),
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 20.w, top: 5.h),
+        //         child: Text(_place.name),
+        //       ),
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 20.w, top: 5.h),
+        //         child: Text(_place.buildingType),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Container(
           width: double.infinity,
           height: 130.h,
@@ -259,6 +274,11 @@ class _TabOne extends StatelessWidget {
                 ),
                 child: Text('Описание'),
               ),
+              Padding(
+                  padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                  child: Flexible(
+                    child: Text(_place.description),
+                  )),
             ],
           ),
         ),
@@ -279,7 +299,24 @@ class _TabOne extends StatelessWidget {
                 child: Flexible(
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [],
+                  children: [
+                    Column(
+                      children: [
+                        Text(_hours[0]),
+                        Text(_hours[1]),
+                        Text(_hours[2]),
+                        Text(''),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(_hours[3]),
+                        Text(_hours[4]),
+                        Text(_hours[5]),
+                        Text(_hours[6]),
+                      ],
+                    ),
+                  ],
                 )),
               ),
             ],
@@ -338,7 +375,9 @@ class _TabTwo extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, top: 5.h),
               child: Column(
                 children: [
-                  Text(_place.phone ?? 'Не указано'),
+                  Text(_place.phone.isNotEmpty
+                      ? _place.phone
+                      : 'Не указано'),
                 ],
               ),
             )

@@ -64,6 +64,10 @@ class SingInUpApiProvider {
 
     var accessToken = await _prefs.read('access_token');
 
+    if(accessToken == null){
+      return 'Not OK';
+    }
+
     Response response = await Dio().post(
       ApiConst.logoutURL,
       options: Options(

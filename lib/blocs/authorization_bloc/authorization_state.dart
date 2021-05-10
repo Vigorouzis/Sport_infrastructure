@@ -8,6 +8,7 @@ abstract class AuthorizationState extends Equatable {
 }
 
 class InitialAuthorizationState extends AuthorizationState {}
+class AuthorizationLoading extends AuthorizationState {}
 
 class AuthorizationSuccess extends AuthorizationState {}
 
