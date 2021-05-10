@@ -32,7 +32,7 @@ class SingInUpApiProvider {
     }
   }
 
-  Future<void> authorization(String login, String password) async {
+  Future<String> authorization(String login, String password) async {
     var params = {
       'login': login,
       'password': password,
@@ -52,13 +52,14 @@ class SingInUpApiProvider {
         SharedPrefs _prefs = SharedPrefs();
         _prefs.save('access_token', response.data['access_token']);
         _prefs.save('refresh_token', response.data['refresh_token']);
+      } else {
+        return 'Not OK';
       }
-    } else {
-      throw Exception('Error fetching places');
     }
+    return 'OK';
   }
 
-  Future<void> logout() async {
+  Future<String> logout() async {
     SharedPrefs _prefs = SharedPrefs();
 
     var accessToken = await _prefs.read('access_token');
@@ -76,6 +77,8 @@ class SingInUpApiProvider {
     if (response.statusCode == 200) {
       print(response.data);
       prefs.clear();
+      return 'OK';
     }
+    return 'Not OK';
   }
 }

@@ -13,11 +13,13 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
   Stream<AuthorizationState> mapEventToState(AuthorizationEvent event) async* {
     if (event is AuthorizationWithLogin) {
       try {
-        singInUpRepository.authorization(
+        String result = await singInUpRepository.authorization(
           login: event.login,
           password: event.password,
         );
-        yield AuthorizationSuccess();
+        if (result == 'OK') {
+          yield AuthorizationSuccess();
+        }
       } catch (_) {
         yield AuthorizationFailure();
       }

@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sport_infrastructure/models/organization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_infrastructure/models/place.dart';
+import 'package:sport_infrastructure/ui/detail_screen.dart';
 
 class DetailScreenForOrganization extends StatefulWidget {
   final Organization _organization;
@@ -448,11 +449,20 @@ class _TabThree extends StatelessWidget {
     return ListView.builder(
       itemCount: _places.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            title: Text(_places[index].name),
-            subtitle: Text(_places[index].address),
-            trailing: Text(_places[index].buildingType),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => DetailScreen(
+                  place: _places[index],
+                ),
+              )),
+          child: Card(
+            child: ListTile(
+              title: Text(_places[index].name),
+              subtitle: Text(_places[index].address),
+              trailing: Text(_places[index].buildingType),
+            ),
           ),
         );
       },

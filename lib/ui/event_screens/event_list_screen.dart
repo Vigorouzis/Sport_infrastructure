@@ -14,8 +14,8 @@ class EventListScreen extends StatefulWidget {
 }
 
 class _EventListScreenState extends State<EventListScreen> {
-
   EventRepository _repository;
+  String result;
 
   List<Event> _events = [
     Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
@@ -55,8 +55,22 @@ class _EventListScreenState extends State<EventListScreen> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () async {
-
-                  await _singInUpProvider.logout();
+                   result = await _singInUpProvider.logout();
+                  print(result);
+                  if (result == 'OK' ) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Вы успешно вышли из аккаунта'),
+                      ),
+                    );
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Что-то пошло не так'),
+                      ),
+                    );
+                  }
                 },
                 child: Icon(Icons.more_vert),
               )),
