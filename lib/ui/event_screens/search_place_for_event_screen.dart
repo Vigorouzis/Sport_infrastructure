@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sport_infrastructure/widgets/widgets.dart';
 
 import '../../blocs/places_list_bloc/places_list_bloc.dart';
 import '../../blocs/places_list_bloc/places_list_event.dart';
 import '../../blocs/places_list_bloc/places_list_state.dart';
-import '../../blocs/places_list_bloc/places_list_state.dart';
 import '../../models/place.dart';
 import '../../resources/place_repository.dart';
-import '../../widgets/place_list.dart';
 import '../../widgets/text_fields.dart';
+import 'package:sport_infrastructure/utils/utils.dart';
 
 class SearchPlaceForEventScreen extends StatefulWidget {
   const SearchPlaceForEventScreen({Key key}) : super(key: key);
@@ -44,19 +44,34 @@ class _SearchPlaceForEventScreenState extends State<SearchPlaceForEventScreen> {
             bloc: _bloc,
             builder: (context, state) => Column(
               children: [
-                SearchTextField(
-                  controller: _searchController,
-                  hintText: 'Введите место',
-                  leading: GestureDetector(
-                    onTap: () => _bloc.add(
-                        PlacesListFetched(placeSearch: _searchController.text)),
-                    child: Icon(Icons.search),
+                Flexible(
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: SearchTextField(
+                          controller: _searchController,
+                          hintText: 'Введите место',
+                          leading: Icon(Icons.search),
+                        ),
+                      ),
+                      DefaultButton(
+                        onTap: () => _bloc.add(
+                          PlacesListFetched(placeSearch: _searchController.text),
+                        ),
+                        height: 50.h,
+                        width: 100.w,
+                        color: Colors.blue,
+                        haveShadow: true,
+                        label: 'Найти',
+                        textColor: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
-                if(state is PlacesListLoaded)
-                PlaceListView(
-                  places: state.places,
-                )
+                if (state is PlacesListLoaded)
+                  PlaceListView(
+                    places: state.places,
+                  )
               ],
             ),
           ),
@@ -73,7 +88,8 @@ class PlaceListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Flexible(
+      flex: 3,
       child: ListView.builder(
         itemCount: _places.length,
         itemBuilder: (context, index) {

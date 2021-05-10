@@ -36,7 +36,6 @@ class _DetailScreenState extends State<DetailScreen>
   @override
   void dispose() {
     _tabController.dispose();
-    _tabController.dispose();
     super.dispose();
   }
 
@@ -377,7 +376,7 @@ class _TabTwo extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, top: 5.h),
               child: Column(
                 children: [
-                  Text(  _place.phone.isNotEmpty ? _place.phone : 'Не указано'),
+                  Text(_place.phone.isNotEmpty ? _place.phone : 'Не указано'),
                 ],
               ),
             )
@@ -464,8 +463,7 @@ class _TabTwo extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, top: 5.h),
               child: Column(
                 children: [
-                  Text(
-                      _place.email.isNotEmpty ? _place.email : 'Не указано'),
+                  Text(_place.email.isNotEmpty ? _place.email : 'Не указано'),
                 ],
               ),
             )
@@ -481,7 +479,10 @@ class _TabThree extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Отзывов пока нет',style: AppTypography.font20SF,),
+        child: Text(
+          'Отзывов пока нет',
+          style: AppTypography.font20SF,
+        ),
       ),
     );
   }

@@ -64,15 +64,23 @@ class _AppScreenState extends State<AppScreen> {
                   children: [
                     DefaultButton(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SearchResultScreen(
-                              isPlace: true,
-                              requestText: _searchController.text,
+                        if (_searchController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Вы не ввели название места'),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchResultScreen(
+                                isPlace: true,
+                                requestText: _searchController.text,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       label: 'Места',
                       height: 50.h,
@@ -85,15 +93,23 @@ class _AppScreenState extends State<AppScreen> {
                       padding: EdgeInsets.only(top: 8.h),
                       child: DefaultButton(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchResultScreen(
-                                isOrganization: true,
-                                requestText: _searchController.text,
+                          if (_searchController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Вы не ввели название организации'),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SearchResultScreen(
+                                  isOrganization: true,
+                                  requestText: _searchController.text,
+                                ),
+                              ),
+                            );
+                          }
                         },
                         label: 'Организации',
                         height: 50.h,
