@@ -47,13 +47,13 @@ class SingInUpApiProvider {
 
     if (response.statusCode == 200) {
       print(response.data);
-      if (response.data != 'cant select user: sql: no rows in result set' ||
+      if (response.data != 'cant select user: sql: no rows in result set' &&
           response.data != 'user already login') {
         SharedPrefs _prefs = SharedPrefs();
         _prefs.save('access_token', response.data['access_token']);
         _prefs.save('refresh_token', response.data['refresh_token']);
       } else {
-        return 'Not OK';
+        return response.data;
       }
     }
     return 'OK';

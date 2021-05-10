@@ -49,12 +49,28 @@ class _SingInScreenState extends State<SingInScreen> {
             bloc: _authorizationBloc,
             listener: (context, state) {
               if (state is AuthorizationSuccess) {
-                print(state);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => CreateEventScreen(),
                   ),
                 );
+              }
+              if (state is AuthorizationFailure) {
+                if (state.error ==
+                    'cant select user: sql: no rows in result set') {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Пользователь не найден'),
+                    ),
+                  );
+                }
+                if (state.error == 'user already login') {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Пользователь уже залогинен'),
+                    ),
+                  );
+                }
               }
             },
             builder: (context, state) => Scaffold(

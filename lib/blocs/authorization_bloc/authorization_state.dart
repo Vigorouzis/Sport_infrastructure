@@ -12,4 +12,10 @@ class AuthorizationLoading extends AuthorizationState {}
 
 class AuthorizationSuccess extends AuthorizationState {}
 
-class AuthorizationFailure extends AuthorizationState {}
+class AuthorizationFailure extends AuthorizationState {
+  final String error;
+
+ const AuthorizationFailure({this.error});
+  @override
+  List<Object> get props => [error];
+}

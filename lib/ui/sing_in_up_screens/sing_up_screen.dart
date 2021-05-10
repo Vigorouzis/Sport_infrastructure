@@ -1,4 +1,3 @@
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -128,20 +127,39 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                   top: 30.h, left: 23.w, right: 24.w),
                               child: DefaultButton(
                                 onTap: () {
-                                  _registrationBloc.add(
-                                    RegistrationNewUser(
-                                        name: _name.text,
-                                        login: _login.text,
-                                        password: _password.text,
-                                        age: int.parse(_age.text),
-                                        email: _email.text),
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SingInScreen(),
-                                    ),
-                                  );
+                                  if (_name.text.isNotEmpty &&
+                                      _login.text.isNotEmpty &&
+                                      _password.text.isNotEmpty &&
+                                      _age.text.isNotEmpty &&
+                                      _email.text.isNotEmpty) {
+                                    _registrationBloc.add(
+                                      RegistrationNewUser(
+                                          name: _name.text,
+                                          login: _login.text,
+                                          password: _password.text,
+                                          age: int.parse(_age.text),
+                                          email: _email.text),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Вы успешно зарегестрировались'),
+                                      ),
+                                    );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SingInScreen(),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Заполните все поля для регистрации'),
+                                      ),
+                                    );
+                                  }
                                 },
                                 textColor: AppColors.greyD9D9D9,
                                 color: AppColors.primary,
