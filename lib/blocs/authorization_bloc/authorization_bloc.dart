@@ -20,6 +20,8 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
         );
         if (result == 'OK') {
           yield AuthorizationSuccess();
+        }else{
+          yield AuthorizationFailure(error: result);
         }
       } catch (_) {
         yield AuthorizationFailure();

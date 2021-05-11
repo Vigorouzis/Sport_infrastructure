@@ -58,13 +58,12 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             bloc: _bloc,
             builder: (context, state) => Padding(
               padding: EdgeInsets.only(left: 16.w, right: 16.w),
-              child: Column(
-                children: [
-                  Text('Введите данные в соответствующие поля'),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
+              child: SingleChildScrollView(
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      Text('Введите данные в соответствующие поля'),
+                      Column(
                         children: [
                           TextField(
                             controller: _titleController,
@@ -177,50 +176,53 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  DefaultButton(
-                    onTap: () async {
-                      if (_titleController.text.isNotEmpty &&
-                          _descriptionController.text.isNotEmpty &&
-                          _timeController.text.isNotEmpty &&
-                          _dateController.text.isNotEmpty &&
-                          _selectPlace.uid.isNotEmpty &&
-                          _limitController.text.isNotEmpty) {
-                        _bloc.add(
-                          CreateEventsEvent(
-                            name: _titleController.text,
-                            description: _descriptionController.text,
-                            time: _timeController.text,
-                            date: _dateController.text,
-                            placeUid: _selectPlace.uid,
-                            limitNumber: int.parse(_limitController.text),
-                            isPrivate: _isPrivate,
-                            password: _passwordController.text,
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Событие успешно создано'),
-                          ),
-                        );
-                        Navigator.of(context).pushNamedAndRemoveUntil('/event_list', ModalRoute.withName('/'));
+                      Padding(
+                        padding: EdgeInsets.only(top: 15.h),
+                        child: DefaultButton(
+                          onTap: () async {
+                            if (_titleController.text.isNotEmpty &&
+                                _descriptionController.text.isNotEmpty &&
+                                _timeController.text.isNotEmpty &&
+                                _dateController.text.isNotEmpty &&
+                                _selectPlace.uid.isNotEmpty &&
+                                _limitController.text.isNotEmpty) {
+                              _bloc.add(
+                                CreateEventsEvent(
+                                  name: _titleController.text,
+                                  description: _descriptionController.text,
+                                  time: _timeController.text,
+                                  date: _dateController.text,
+                                  placeUid: _selectPlace.uid,
+                                  limitNumber: int.parse(_limitController.text),
+                                  isPrivate: _isPrivate,
+                                  password: _passwordController.text,
+                                ),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Событие успешно создано'),
+                                ),
+                              );
+                              Navigator.of(context).pushNamedAndRemoveUntil('/event_list', ModalRoute.withName('/'));
 
 
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Заполните все поля')),
-                        );
-                      }
-                    },
-                    haveShadow: true,
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    height: 40.h,
-                    width: 328.w,
-                    label: 'Создать',
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Заполните все поля')),
+                              );
+                            }
+                          },
+                          haveShadow: true,
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          height: 40.h,
+                          width: 328.w,
+                          label: 'Создать',
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
