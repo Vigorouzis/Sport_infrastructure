@@ -50,31 +50,6 @@ class _EventListScreenState extends State<EventListScreen> {
       appBar: AppBar(
         title: Text('Список событий'),
         centerTitle: true,
-        actions: [
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () async {
-                  result = await _singInUpProvider.logout();
-                  print(result);
-                  if (result == 'OK') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Вы успешно вышли из аккаунта'),
-                      ),
-                    );
-                  }
-                  if (result == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Что-то пошло не так'),
-                      ),
-                    );
-                  }
-                },
-                child: Text('Выход'),
-              )),
-        ],
       ),
       body: ListView.separated(
           itemBuilder: (context, index) => Container(

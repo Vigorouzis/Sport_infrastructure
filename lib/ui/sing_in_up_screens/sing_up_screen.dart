@@ -161,8 +161,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                     );
                                   }
                                 },
-                                textColor: AppColors.greyD9D9D9,
-                                color: AppColors.primary,
+                                textColor: AppColors.white,
+                                color: AppColors.blue007AFF,
                                 label: 'Продолжить',
                                 height: 40.h,
                                 width: 328.w,

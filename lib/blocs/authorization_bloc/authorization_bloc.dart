@@ -12,7 +12,6 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
   @override
   Stream<AuthorizationState> mapEventToState(AuthorizationEvent event) async* {
     if (event is AuthorizationWithLogin) {
-
       try {
         String result = await singInUpRepository.authorization(
           login: event.login,
@@ -20,7 +19,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
         );
         if (result == 'OK') {
           yield AuthorizationSuccess();
-        }else{
+        } else {
           yield AuthorizationFailure(error: result);
         }
       } catch (_) {
