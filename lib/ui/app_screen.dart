@@ -13,8 +13,6 @@ class AppScreen extends StatefulWidget {
 
 class _AppScreenState extends State<AppScreen> {
   TextEditingController _searchController;
-  String access_token;
-  String refresh_token;
   SharedPrefs _prefs = SharedPrefs();
 
   @override
@@ -26,7 +24,6 @@ class _AppScreenState extends State<AppScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -57,12 +54,13 @@ class _AppScreenState extends State<AppScreen> {
                   ),
                 ),
               ),
-              ContentSlider(),
-              Padding(
-                padding: EdgeInsets.only(left: 50.w, top: 30.h),
-                child: Column(
-                  children: [
-                    DefaultButton(
+              // ContentSlider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: DefaultButton(
                       onTap: () {
                         if (_searchController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -89,55 +87,55 @@ class _AppScreenState extends State<AppScreen> {
                       textColor: Colors.white,
                       haveShadow: true,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.h),
-                      child: DefaultButton(
-                        onTap: () {
-                          if (_searchController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Вы не ввели название организации'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: DefaultButton(
+                      onTap: () {
+                        if (_searchController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Вы не ввели название организации'),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchResultScreen(
+                                isOrganization: true,
+                                requestText: _searchController.text,
                               ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SearchResultScreen(
-                                  isOrganization: true,
-                                  requestText: _searchController.text,
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                        label: 'Организации',
-                        height: 50.h,
-                        width: 100.w,
-                        color: Colors.blue,
-                        textColor: Colors.white,
-                        haveShadow: true,
-                      ),
+                            ),
+                          );
+                        }
+                      },
+                      label: 'Организации',
+                      height: 50.h,
+                      width: 100.w,
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      haveShadow: true,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.h),
-                      child: DefaultButton(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EventListScreen(),
-                          ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: DefaultButton(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EventListScreen(),
                         ),
-                        label: 'События',
-                        height: 50.h,
-                        width: 100.w,
-                        color: Colors.blue,
-                        textColor: Colors.white,
-                        haveShadow: true,
                       ),
-                    )
-                  ],
-                ),
+                      label: 'События',
+                      height: 50.h,
+                      width: 100.w,
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      haveShadow: true,
+                    ),
+                  )
+                ],
               )
             ],
           ),

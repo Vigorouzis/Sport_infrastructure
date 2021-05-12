@@ -26,7 +26,7 @@ class _DetailScreenState extends State<DetailScreen>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
-    _hours = widget._place.openingHours.split(RegExp('\n'));
+    _hours = widget._place.openingHours.split(RegExp(':'));
   }
 
   void _handleTabSelection() {
@@ -61,9 +61,11 @@ class _DetailScreenState extends State<DetailScreen>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    _TabOne(
-                      place: widget._place,
-                      hours: _hours,
+                    SingleChildScrollView(
+                      child: _TabOne(
+                        place: widget._place,
+                        hours: _hours,
+                      ),
                     ),
                     _TabTwo(
                       place: widget._place,
@@ -211,93 +213,88 @@ class _TabOne extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: double.infinity,
-          height: 130.h,
+        SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 3.w,
+              Container(
+                width: double.infinity,
+                height: 130.h,
+                child: SingleChildScrollView(
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 3.w,
+                          ),
+                          child: Text('Местоположение'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(_place.address),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(_place.postIndex),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(_place.name),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(_place.buildingType),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Text('Местоположение'),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                child: Text(_place.address),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                child: Text(_place.postIndex),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                child: Text(_place.name),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                child: Text(_place.buildingType),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          height: 130.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 3.w,
-                ),
-                child: Text('Описание'),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                  child: Flexible(
-                    child: Text(_place.description),
-                  )),
-            ],
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          height: 130.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 3.w,
-                ),
-                child: Text('Часы работы'),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 5.h),
-                child: Flexible(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Container(
+                width: double.infinity,
+                height: 130.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      children: [
-                        Text(_hours[0]),
-                        Text(_hours[1]),
-                        Text(_hours[2]),
-                        Text(''),
-                      ],
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 3.w,
+                      ),
+                      child: Text('Описание'),
                     ),
-                    Column(
-                      children: [
-                        Text(_hours[3]),
-                        Text(_hours[4]),
-                        Text(_hours[5]),
-                        Text(_hours[6]),
-                      ],
-                    ),
+                    Padding(
+                        padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                        child: Flexible(
+                          child: Text(_place.description.isNotEmpty
+                              ? _place.description
+                              : 'Не указано'),
+                        )),
                   ],
-                )),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 130.h,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 3.w,
+                        ),
+                        child: Text('Часы работы'),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, top: 5.h),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(_place.openingHours)),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
