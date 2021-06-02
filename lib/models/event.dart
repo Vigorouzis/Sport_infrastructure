@@ -7,7 +7,7 @@ class Event {
   final int visitorNum;
   final int visitorLimit;
   final String placeUID;
-  final String creatorUID;
+  String creatorUID;
   final bool isPrivate;
   final String eventPassword;
   final bool isOver;
