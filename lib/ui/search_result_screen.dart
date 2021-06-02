@@ -9,7 +9,6 @@ import 'package:sport_infrastructure/models/place.dart';
 import 'package:sport_infrastructure/resources/place_repository.dart';
 import 'package:sport_infrastructure/ui/detail_screen.dart';
 import 'package:sport_infrastructure/ui/details_screen_for_organization.dart';
-import 'file:///E:/Projects/Sport_infrastructure/lib/widgets/place_list.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final bool _isPlace;
