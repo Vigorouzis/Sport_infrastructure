@@ -44,7 +44,7 @@ class _AppScreenState extends State<AppScreen> {
                     controller: _searchController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Search',
+                      hintText: 'Введите название места или организации',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(color: Color(0xFF000000)),

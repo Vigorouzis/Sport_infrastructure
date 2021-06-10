@@ -8,6 +8,9 @@ class PlaceRepository {
   Future<List<Place>> getPlaceByName({String value}) =>
       _placeProvider.getPlaceByName(value);
 
+  Future<Map<String,dynamic>> getPlaceByUid({String value}) =>
+      _placeProvider.getPlaceByUid(value);
+
   Future<List<Organization>> getOrganizationByName({String value}) =>
       _placeProvider.getOrganizationByName(value);
 }

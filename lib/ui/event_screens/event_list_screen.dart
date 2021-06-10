@@ -8,6 +8,7 @@ import 'package:sport_infrastructure/resources/event_repository.dart';
 import 'package:sport_infrastructure/resources/shared_prefs.dart';
 import 'package:sport_infrastructure/resources/sing_in_up_api_provider.dart';
 import 'package:sport_infrastructure/ui/event_screens/create_event_screen.dart';
+import 'package:sport_infrastructure/ui/event_screens/event_details_screen.dart';
 import 'package:sport_infrastructure/ui/sing_in_up_screens/sing_in_screen.dart';
 import 'package:sport_infrastructure/utils/utils.dart';
 import 'package:sport_infrastructure/widgets/widgets.dart';
@@ -20,18 +21,6 @@ class EventListScreen extends StatefulWidget {
 class _EventListScreenState extends State<EventListScreen> {
   EventRepository _repository;
   String result;
-
-  // List<Event> _events = [
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  //   Event(name: 'Баскетбол', time: '16:30', creatorUID: "fdc2f8155f0"),
-  // ];
 
   var isAccessKeysCreated = false;
   SharedPrefs _prefs = SharedPrefs();
@@ -55,6 +44,12 @@ class _EventListScreenState extends State<EventListScreen> {
   }
 
   @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -65,57 +60,78 @@ class _EventListScreenState extends State<EventListScreen> {
         create: (_) => EventListBloc(),
         child: Builder(
           builder: (context) => BlocBuilder<EventListBloc, EventsListState>(
-              bloc: _bloc,
-              builder: (context, state) {
-                if (state is EventsListLoading) {
-                  return RefreshIndicator(
-                      onRefresh: _pullRefresh,
-                      child: Center(child: CircularProgressIndicator()));
-                }
-                if (state is EventsListLoaded) {
-                  return RefreshIndicator(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is EventsListLoading) {
+                return RefreshIndicator(
                     onRefresh: _pullRefresh,
-                    child: ListView.separated(
-                        itemBuilder: (context, index) => Container(
+                    child: Center(child: CircularProgressIndicator()));
+              }
+              if (state is EventsListLoaded) {
+                return RefreshIndicator(
+                  onRefresh: _pullRefresh,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) => GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => EventDetailScreen(
+                                  event: state.events[index],
+                                  place: state.places[index],
+                                ),
+                              ),
+                            ),
+                            child: Container(
                               height: 50.h,
                               child: Padding(
                                 padding: EdgeInsets.only(
                                   left: 23.w,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       state.events[index].name,
                                       style: AppTypography.font18SF
                                           .copyWith(color: AppColors.black),
                                     ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          'Время:  ${state.events[index].time}',
-                                          style: AppTypography.font16SF
-                                              .copyWith(color: AppColors.black),
-                                        ),
-                                        Text(
-                                          'Создатель: ${state.events[index].creatorUID}',
-                                          style: AppTypography.font16SF
-                                              .copyWith(color: AppColors.black),
-                                        ),
-                                      ],
+                                    const Spacer(),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10.w),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Время:  ${state.events[index].time}',
+                                            style: AppTypography.font16SF
+                                                .copyWith(
+                                                    color: AppColors.black),
+                                          ),
+                                          Text(
+                                            'Создатель: ${state.events[index].creatorUID}',
+                                            style: AppTypography.font16SF
+                                                .copyWith(
+                                                    color: AppColors.black),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                        separatorBuilder: (context, index) => CustomDivider(),
-                        itemCount: state.events.length),
-                  );
-                }
-                return RefreshIndicator(
-                    onRefresh: _pullRefresh, child: Container());
-              }),
+                          ),
+                      separatorBuilder: (context, index) => CustomDivider(),
+                      itemCount: state.events.length),
+                );
+              }
+              return RefreshIndicator(
+                onRefresh: _pullRefresh,
+                child: Container(
+                  child: Center(
+                    child: Text('Нет созданных событий'),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

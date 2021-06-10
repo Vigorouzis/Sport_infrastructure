@@ -52,6 +52,10 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Результаты поиска'),
+        centerTitle: true,
+      ),
       body: SafeArea(
           child: BlocProvider(
         create: (_) => PlacesListBloc(_placeRepository),
@@ -100,7 +104,6 @@ class PlaceListView extends StatelessWidget {
             child: ListTile(
               title: Text(_places[index].name),
               subtitle: Text(_places[index].address),
-              trailing: Text(_places[index].buildingType),
             ),
           ),
         );

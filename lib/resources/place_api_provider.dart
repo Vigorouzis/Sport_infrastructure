@@ -35,4 +35,17 @@ class PlaceApiProvider {
       throw Exception('Error fetching places');
     }
   }
+
+  Future<Map<String,dynamic>> getPlaceByUid(String value) async {
+    Response response = await Dio()
+        .get('${placesUrl}place?uid=$value');
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> map = json.decode(response.data);
+
+      return map;
+    } else {
+      throw Exception('Error fetching places');
+    }
+  }
 }
